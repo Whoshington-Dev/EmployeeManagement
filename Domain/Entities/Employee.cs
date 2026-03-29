@@ -65,7 +65,6 @@ namespace EmployeeManagement.Domain.Entities
                 return EmployeeStatus.Fired;
             }
         }
-
         public void LayOff(DateTime terminationDate, string terminationReason)
         {
             if (EmployeeStatus == EmployeeStatus.Fired)
