@@ -2,7 +2,7 @@
 
 namespace EmployeeManagement.Domain.Entities
 {
-    class JobPosition 
+    class JobPosition
     {
         public string Post { get; set; }
         public Department Department { get; set; }
@@ -10,12 +10,16 @@ namespace EmployeeManagement.Domain.Entities
 
         public JobPosition() { }
 
-        
-        public JobPosition(string post, Department department, Seniority seniority, EmployeeStatus employeeStatus)
+        public JobPosition(string post, Department department, Seniority seniority)
         {
+            if (string.IsNullOrWhiteSpace(post))
+            {
+                throw new ArgumentNullException($"Invalid name entered! Please try again. {nameof(post)}");
+            }
             Post = post;
             Department = department;
             Seniority = seniority;
         }
+
     }
 }

@@ -2,8 +2,9 @@
 {
     enum Seniority
     {
-        Junior = 0,
-        Pleno = 1, 
-        Senior = 2
+        Trainee = 0,
+        Junior = 1,
+        Pleno = 2, 
+        Senior = 3
     }
 }
