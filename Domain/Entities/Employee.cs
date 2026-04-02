@@ -86,20 +86,20 @@ namespace EmployeeManagement.Domain.Entities
                 throw new InvalidOperationException("The employee is not in the system, please try again.");
             }
         }
-        public void Responsibilities(Department dptName, JobPosition post, Seniority seniority)
+        public void Responsibilities(Department department, JobPosition jobPosition, Seniority seniority)
         {
             // Method for registering a new employee.
             UserStatus();
-            Department = dptName;
-            JobPosition = post;
+            Department = department;
+            JobPosition = jobPosition;
             Seniority = seniority;
 
         }
         // Methods for editing
-        public void ChangeDepartment(Department dptName)
+        public void ChangeDepartment(Department department)
         {
             UserStatus();
-            Department = dptName;
+            Department = department;
         }
         public void ChangeJobPosition(JobPosition jobPosition)
         {

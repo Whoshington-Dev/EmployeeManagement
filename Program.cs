@@ -1,5 +1,7 @@
 ﻿using EmployeeManagement.Domain.Entities;
 using EmployeeManagement.Domain.Entities.Enums;
+using EmployeeManagement.Repositories;
+using EmployeeManagement.Services;
 
 namespace EmployeeManagement
 {
@@ -40,22 +42,24 @@ namespace EmployeeManagement
                     string nameEmployee = Console.ReadLine();
 
                     Console.Write("Employee Department: ");
-                    string dptName = Console.ReadLine();
-                    Department department = new Department(dptName: dptName);
+                    string departmentName = Console.ReadLine();
+                    Department department = new Department(dptName: departmentName);
 
                     Console.Write("Employee Seniority (Trainee, Junior, Pleno, Senior): ");
-                    string snt = Console.ReadLine().Trim();
+                    string seniorityInput = Console.ReadLine().Trim();
 
-                    Enum.TryParse<Seniority>(snt, out Seniority result);
+                    Enum.TryParse<Seniority>(seniorityInput, out Seniority result);
 
                     Console.Write("What will the employee's position be? ");
-                    string post = Console.ReadLine();
-                    JobPosition joPosition = new JobPosition(post, department, result);
+                    string jobTitle = Console.ReadLine();
+                    JobPosition joPosition = new JobPosition(jobTitle, department, result);
 
                     Console.Write("On what date was he admitted? ");
-                    DateTime admDate = DateTime.Parse(Console.ReadLine(), new System.Globalization.CultureInfo("pt-br"));
+                    DateTime admissionDate = DateTime.Parse(Console.ReadLine(), new System.Globalization.CultureInfo("pt-br"));
 
-                    employees.Add(new Employee(cpf, nameEmployee, department, result, joPosition, admDate));
+                    // Repositorys and Service
+                    EmployeeService employeeService = new EmployeeService(new EmployeeRepository());
+                    employeeService.AddEmployee(cpf, nameEmployee, department, result, joPosition, admissionDate);
 
                 }
                 catch (ArgumentNullException ex)
@@ -76,10 +80,9 @@ namespace EmployeeManagement
             {
                 try
                 {
+                    // searching for CPF
                     Console.Write("What employee name will be edited? (search by CPF) ");
                     string cpf = Console.ReadLine();
-
-                    Employee found = employees.First(employees => employees.Cpf == cpf); // Usei um LINQ para verificar se um nome digitado existe na minha Lista. 
 
                     Console.WriteLine("What will you edit? ");
                     Console.Write
@@ -88,31 +91,9 @@ namespace EmployeeManagement
                         " 2 - JobPosition " +
                         " 3 - Seniority: "
                         );
-                    int editing = int.Parse(Console.ReadLine());
-                    switch (editing)
-                    {
-                        case 1:
-                            Console.Write("New Department: ");
-                            string newDpt = Console.ReadLine();
-                            Department department = new Department(dptName: newDpt);
-                            found.ChangeDepartment(department);
-                            break;
 
-                        case 2:
-                            Console.Write("New Job Position: ");
-                            string newJpt = Console.ReadLine();
-                            JobPosition joPosition = new JobPosition(newJpt, found.Department, found.Seniority);
-                            found.ChangeJobPosition(joPosition);
-                            break;
-
-                        case 3:
-                            Console.Write("New seniority: ");
-                            string snt = Console.ReadLine();
-                            Enum.TryParse<Seniority>(snt, out Seniority result);
-
-                            found.ChangeSeniority(result);
-                            break;
-                    }
+                    EmployeeService employeeService = new EmployeeService(new EmployeeRepository());
+                    employeeService.EditEmployee(cpf);
                 }
                 catch (InvalidOperationException ex)
                 {
@@ -131,15 +112,15 @@ namespace EmployeeManagement
                 {
                     Console.Write("What is an employee (search by CPF): ");
                     string cpf = Console.ReadLine();
-                    Employee employee = employees.First(employees => employees.Cpf == cpf);
 
                     Console.Write("When was the employee laid off? ");
-                    DateTime laidOff = DateTime.Parse(Console.ReadLine(), new System.Globalization.CultureInfo("pt-br"));
+                    DateTime terminationDate = DateTime.Parse(Console.ReadLine(), new System.Globalization.CultureInfo("pt-br"));
 
                     Console.Write("Reason for Layoff: ");
                     string reason = Console.ReadLine();
 
-                    employee.LayOff(laidOff, reason);
+                    EmployeeService employeeService = new EmployeeService(new EmployeeRepository());
+                    employeeService.LayOffEmployee(cpf, terminationDate, reason);
                 }
                 catch (InvalidOperationException e)
                 {
@@ -148,9 +129,9 @@ namespace EmployeeManagement
             }
 
             Console.Write("Do you want any more operations? (Y) (N): ");
-            char opt = char.Parse(Console.ReadLine().ToUpper());
+            char continueOption = char.Parse(Console.ReadLine().ToUpper());
 
-            while (opt == 'Y')
+            while (continueOption == 'Y')
             {
                 Console.Write("What do you want to do? Edit(1) or Add(2) or Fired(3): ");
                 int select = int.Parse(Console.ReadLine());
@@ -167,7 +148,7 @@ namespace EmployeeManagement
                         break;
                 }
                 Console.Write("Do you want any more operations? (Y) (N): ");
-                nopt = char.Parse(Console.ReadLine().ToUpper());
+                continueOption = char.Parse(Console.ReadLine().ToUpper());
             }
 
         }
