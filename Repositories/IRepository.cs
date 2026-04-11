@@ -2,7 +2,7 @@
 
 namespace EmployeeManagement.Repository
 {
-    interface IEmployeeRepository
+    public interface IEmployeeRepository
     {
         // Acess Employee 
         public Employee GetByCpf(string Cpf);

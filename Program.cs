@@ -5,7 +5,7 @@ using EmployeeManagement.Services;
 
 namespace EmployeeManagement
 {
-    class Program
+    public class Program
     {
         public static void Main()
         {
@@ -91,9 +91,6 @@ namespace EmployeeManagement
                         " 2 - JobPosition " +
                         " 3 - Seniority: "
                         );
-
-                    EmployeeService employeeService = new EmployeeService(new EmployeeRepository());
-                    employeeService.EditEmployee(cpf);
                 }
                 catch (InvalidOperationException ex)
                 {

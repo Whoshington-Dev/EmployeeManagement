@@ -2,7 +2,7 @@
 
 namespace EmployeeManagement.Domain.Entities
 {
-    class Employee
+    public class Employee
     {
         public string Name { get; private set; }
         public string Cpf { get; private set; }

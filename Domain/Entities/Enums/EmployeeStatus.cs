@@ -1,6 +1,6 @@
 ﻿namespace EmployeeManagement.Domain.Entities.Enums
 {
-    enum EmployeeStatus
+    public enum EmployeeStatus
     {
         InExperience = 0,
         Active = 1,

@@ -1,6 +1,6 @@
 ﻿namespace EmployeeManagement.Domain.Entities
 {
-    class Department
+    public class Department
     {
         public string departmentName { get; private set; }
         public Guid Id { get; private set; }

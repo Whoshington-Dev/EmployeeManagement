@@ -1,6 +1,6 @@
 ﻿namespace EmployeeManagement.Domain.Entities.Enums
 {
-    enum Seniority
+    public enum Seniority
     {
         Trainee = 0,
         Junior = 1,
