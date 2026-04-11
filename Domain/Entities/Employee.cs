@@ -2,10 +2,10 @@
 
 namespace EmployeeManagement.Domain.Entities
 {
-    class Employee
+    public class Employee
     {
-        public string Name { get; private set; }
         public string Cpf { get; private set; }
+        public string Name { get; private set; }
         private readonly string _internalId = Guid.NewGuid().ToString(); // The ID cannot be changed.
         public DateTime DateOfAdmission { get; private set; }
         public Seniority Seniority { get; private set; }
@@ -53,7 +53,7 @@ namespace EmployeeManagement.Domain.Entities
             else
             {
                 return EmployeeStatus.Active;
-            }            
+            }
         }
         public EmployeeStatus EndDays(DateTime endOfContract)
         {

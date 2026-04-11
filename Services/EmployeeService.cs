@@ -4,11 +4,9 @@ using EmployeeManagement.Repository;
 
 namespace EmployeeManagement.Services
 {
-    class EmployeeService
+    public class EmployeeService
     {
         private readonly IEmployeeRepository _repository;
-
-        List<Employee> employees;
 
         public EmployeeService(IEmployeeRepository repository)
         {
@@ -19,44 +17,28 @@ namespace EmployeeManagement.Services
             Employee employee = new Employee(cpf, name, department, seniority, jobPosition, admissionDate);
             _repository.Add(employee);
         }
-        public void EditEmployee(string cpf)
+        public void EditEmployee(string cpf, Department department, JobPosition jobPosition, Seniority seniority)
         {
-            Employee employee = employees.First(emp => emp.Cpf == cpf);
+            Employee employee = _repository.GetByCpf(cpf);
 
+            employee.ChangeDepartment(department);
+            employee.ChangeJobPosition(jobPosition);
+            employee.ChangeSeniority(seniority);
 
-            int editing = int.Parse(Console.ReadLine());
-            switch (editing)
-            {
-                case 1:
-                    Console.Write("New Department: ");
-                    string newDepartmentName = Console.ReadLine();
-                    Department department = new Department(dptName: newDepartmentName);
-                    employee.ChangeDepartment(department);
-                    break;
-
-                case 2:
-                    Console.Write("New Job Position: ");
-                    string newPositionTitle = Console.ReadLine();
-                    JobPosition jobPosition = new JobPosition(newPositionTitle, employee.Department, employee.Seniority);
-                    employee.ChangeJobPosition(jobPosition);
-                    break;
-
-                case 3:
-                    Console.Write("New seniority: ");
-                    string seniorityInput = Console.ReadLine();
-                    Enum.TryParse<Seniority>(seniorityInput, out Seniority result);
-
-                    employee.ChangeSeniority(result);
-                    break;
-            }
             _repository.Update(employee);
 
         }
-        public void LayOffEmployee(string cpf, DateTime laidOff, string reason)
+        public void LayOffEmployee(string cpf, DateTime TerminationDate, string reason)
         {
-            Employee employee = employees.First(employees => employees.Cpf == cpf);
-            employee.LayOff(laidOff, reason);
+            Employee employee = _repository.GetByCpf(cpf);
+            employee.LayOff(TerminationDate, reason);
             _repository.Update(employee);
         }
+        public IList<Employee> GetEmployees()
+        {
+            return _repository.GetAll();
+        }
+
+
     }
 }

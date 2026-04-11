@@ -3,7 +3,7 @@ using EmployeeManagement.Repository;
 
 namespace EmployeeManagement.Repositories
 {
-    class EmployeeRepository : IEmployeeRepository
+    public class EmployeeRepository : IEmployeeRepository
     {
         List<Employee> employees = new List<Employee>();
 
@@ -22,7 +22,7 @@ namespace EmployeeManagement.Repositories
         }
         public Employee GetByCpf(string Cpf)
         {
-            return employees.First(emp => emp.Cpf == Cpf);
+            return employees.FirstOrDefault(emp => emp.Cpf == Cpf);
         }
         public IList<Employee> GetAll()
         {
