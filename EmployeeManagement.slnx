@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="../Employee Management API/Employee Management API.csproj" />
+  <Project Path="./Employee Management API/Employee Management API.csproj" />
   <Project Path="EmployeeManagement.csproj" />
 </Solution>
