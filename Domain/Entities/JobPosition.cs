@@ -1,11 +1,16 @@
 ﻿using EmployeeManagement.Domain.Entities.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeManagement.Domain.Entities
 {
+    [Table("JobPosition")]
     public class JobPosition
     {
-        public string jobPosition { get; set; }
+        public int Id { get; set; }
+        [Column("jobTitle")]
+        public string JobPositionName { get; set; }
         public Department Department { get; set; }
+        public int DepartmentId { get; set; }
         public Seniority Seniority { get; set; }
 
         public JobPosition() { }
@@ -16,7 +21,7 @@ namespace EmployeeManagement.Domain.Entities
             {
                 throw new ArgumentNullException($"Invalid name entered! Please try again. {nameof(jobPosition)}");
             }
-            this.jobPosition = jobPosition;
+            JobPositionName = jobPosition;
             Department = department;
             Seniority = seniority;
         }

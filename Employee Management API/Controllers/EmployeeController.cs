@@ -19,8 +19,8 @@ namespace Employee_Management_API.Controllers
         [HttpPost] // Verb for addition
         public IActionResult AddEmploye([FromBody] DTOAddition dtoAdd)
         {
-            _service.AddEmployee(dtoAdd.Cpf, dtoAdd.Name, new Department(dtoAdd.Department), dtoAdd.Seniority,
-                new JobPosition(dtoAdd.JobPosition, new Department(dtoAdd.Department), dtoAdd.Seniority), dtoAdd.DateOfAdmission
+            _service.AddEmployee(dtoAdd.Cpf, dtoAdd.Name, new Department(dtoAdd.Department),
+                new JobPosition(dtoAdd.JobPositionName, new Department(dtoAdd.Department), dtoAdd.Seniority), dtoAdd.Seniority, dtoAdd.DateOfAdmission
                 );
             return Created();
         }
@@ -28,7 +28,7 @@ namespace Employee_Management_API.Controllers
         public IActionResult EditEmployee([FromBody] DTOEdit dtoEdit)
         {
             _service.EditEmployee(dtoEdit.Cpf, new Department(dtoEdit.Department),
-                new JobPosition(dtoEdit.JobPosition, new Department(dtoEdit.Department), dtoEdit.Seniority), dtoEdit.Seniority);
+                new JobPosition(dtoEdit.JobPositionName, new Department(dtoEdit.Department), dtoEdit.Seniority), dtoEdit.Seniority);
             return NoContent();
         }
         [HttpPatch]
@@ -50,9 +50,7 @@ namespace Employee_Management_API.Controllers
             }).ToList();
 
             return Ok(response);
+
         }
-
-
-
     }
 }

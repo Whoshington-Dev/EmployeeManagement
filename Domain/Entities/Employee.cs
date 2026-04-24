@@ -1,24 +1,29 @@
 ﻿using EmployeeManagement.Domain.Entities.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace EmployeeManagement.Domain.Entities
 {
+    [Table("Employees")]
     public class Employee
     {
+        public int Id { get; set; }
         public string Cpf { get; private set; }
         public string Name { get; private set; }
-        private readonly string _internalId = Guid.NewGuid().ToString(); // The ID cannot be changed.
         public DateTime DateOfAdmission { get; private set; }
         public Seniority Seniority { get; private set; }
         public EmployeeStatus EmployeeStatus { get; private set; }
         public Department Department { get; private set; }
+        public int DepartmentId { get; set; }
         public JobPosition JobPosition { get; private set; }
-        public DateTime TerminationDate { get; private set; }
-        public string TerminationReason { get; private set; }
+        public int JobPositionId { get; set; }
+        public DateTime? TerminationDate { get; private set; }
+        public string? TerminationReason { get; set; }
 
         public Employee() { }
 
         // Registration Of New Employees
-        public Employee(string cpf, string name, Department department, Seniority seniority, JobPosition jobPosition, DateTime dateOfAdmission)
+        public Employee(string cpf, string name, Department department, JobPosition jobPosition, Seniority seniority, DateTime dateOfAdmission)
         {
 
             if (string.IsNullOrWhiteSpace(name))
@@ -41,7 +46,7 @@ namespace EmployeeManagement.Domain.Entities
             return (int)(reference - date).TotalDays;
         }
 
-        public EmployeeStatus CompanyTenure(DateTime admissionDate, DateTime? referenceDate = null)
+        public EmployeeStatus CompanyTenure(DateTime admissionDate)
         {
 
             int days = CalculateDays(admissionDate);
@@ -110,7 +115,7 @@ namespace EmployeeManagement.Domain.Entities
         {
             UserStatus();
             Seniority = seniority;
-
         }
+
     }
 }

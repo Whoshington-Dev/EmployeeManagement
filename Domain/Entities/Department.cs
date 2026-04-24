@@ -1,9 +1,13 @@
-﻿namespace EmployeeManagement.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EmployeeManagement.Domain.Entities
 {
+    [Table("Department")]
+
     public class Department
     {
+        public int Id { get; set; }
         public string DptName { get; private set; }
-        public Guid Id { get; private set; }
 
         public Department(string dptName)
         {
@@ -13,7 +17,6 @@
             { // If what was typed is null, empty, or consists only of spaces, an exception will be thrown.
                 throw new ArgumentNullException("Invalid name entered! Please try again. ", nameof(dptName));
             }
-            Id = Guid.NewGuid();
         }
     }
 }

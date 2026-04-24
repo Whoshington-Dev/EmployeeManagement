@@ -10,8 +10,8 @@ namespace Employee_Management_API.DTOs
         public string Name { get; set; }
         public string Cpf { get; set; }
         public string Department { get; set; }
+        public string JobPositionName { get; set; }
         public Seniority Seniority { get; set; }
         public DateTime DateOfAdmission { get; set; }
-        public string JobPosition { get; set; }
     }
 }

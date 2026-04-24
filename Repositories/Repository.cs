@@ -1,32 +1,42 @@
 ﻿using EmployeeManagement.Domain.Entities;
+using EmployeeManagement.Infrastructure;
 using EmployeeManagement.Repository;
 
 namespace EmployeeManagement.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        List<Employee> employees = new List<Employee>();
+        private readonly DbContextEF _context;
+
+        public EmployeeRepository(DbContextEF context)
+        {
+            _context = context;
+        }
 
         public void Add(Employee employee)
+        
         {
-            employees.Add(employee);
+            _context.Employees.Add(employee);
+            _context.SaveChanges();
         }
         public void Remove(Employee employee)
         {
-            employees.Remove(employee);
+            _context.Employees.Remove(employee);
+            _context.SaveChanges();
         }
         public void Update(Employee employee)
         {
-            int index = employees.FindIndex(emp => emp.Cpf == employee.Cpf);
-            employees[index] = employee;
+            _context.Employees.Update(employee);
+            _context.SaveChanges();
         }
         public Employee GetByCpf(string Cpf)
         {
-            return employees.FirstOrDefault(emp => emp.Cpf == Cpf);
+            return _context.Employees.FirstOrDefault(emp => emp.Cpf == Cpf);
+
         }
         public IList<Employee> GetAll()
         {
-            return employees.ToList();
+            return _context.Employees.ToList();
         }
 
     }

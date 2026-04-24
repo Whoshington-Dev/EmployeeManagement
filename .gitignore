@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 Employee Management API/obj/
 Employee Management API/bin/
+appsettings.json
+appsettings.Development.json
