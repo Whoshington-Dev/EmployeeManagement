@@ -4,7 +4,7 @@ namespace EmployeeManagement.Repositories
 {
     public interface IDepartmentRepository
     {
-        public Department GetByName(string dptName);
-        public Department Add(string dptName);
+        public Task<Department> GetByNameAsync(string dptName);
+        public Task<Department> AddAsync(string dptName);
     }
 }

@@ -3,6 +3,7 @@ using EmployeeManagement.Domain.Entities;
 using EmployeeManagement.Services;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace Employee_Management_API.Controllers
 {
     [ApiController]
@@ -17,30 +18,30 @@ namespace Employee_Management_API.Controllers
         }
 
         [HttpPost] // Verb for addition
-        public IActionResult AddEmploye([FromBody] DTOAddition dtoAdd)
+        public async Task<IActionResult> AddEmployee([FromBody] DTOAddition dtoAdd)
         {
-            _service.AddEmployee(dtoAdd.Cpf, dtoAdd.Name, new Department(dtoAdd.Department),
+            await _service.AddEmployeeAsync(dtoAdd.Cpf, dtoAdd.Name, new Department(dtoAdd.Department),
                 new JobPosition(dtoAdd.JobPositionName, new Department(dtoAdd.Department), dtoAdd.Seniority), dtoAdd.Seniority, dtoAdd.DateOfAdmission
                 );
-            return Created();
+            return Created(); // 201 
         }
         [HttpPut]
-        public IActionResult EditEmployee([FromBody] DTOEdit dtoEdit)
+        public async Task<IActionResult> EditEmployee([FromBody] DTOEdit dtoEdit)
         {
-            _service.EditEmployee(dtoEdit.Cpf, new Department(dtoEdit.Department),
+            await _service.EditEmployeeAsync(dtoEdit.Cpf, new Department(dtoEdit.Department),
                 new JobPosition(dtoEdit.JobPositionName, new Department(dtoEdit.Department), dtoEdit.Seniority), dtoEdit.Seniority);
-            return NoContent();
+            return NoContent(); // 204
         }
         [HttpPatch]
-        public IActionResult LayOff([FromBody] DTOLayOff dtoLayOff)
+        public async Task<IActionResult> LayOff([FromBody] DTOLayOff dtoLayOff)
         {
-            _service.LayOffEmployee(dtoLayOff.Cpf, dtoLayOff.TerminationDate, dtoLayOff.Reason);
-            return NoContent();
+            await _service.LayOffEmployeeAsync(dtoLayOff.Cpf, dtoLayOff.TerminationDate, dtoLayOff.Reason);
+            return NoContent(); // 204 
         }
         [HttpGet]
-        public IActionResult Employee()
+        public async Task<IActionResult> Employee()
         {
-            var employees = _service.GetEmployees();
+            var employees = await _service.GetEmployeesAsync();
             var response = employees.Select(emp => new DTOResponse
             {
                 Cpf = emp.Cpf,
@@ -49,8 +50,7 @@ namespace Employee_Management_API.Controllers
                 Status = emp.EmployeeStatus
             }).ToList();
 
-            return Ok(response);
-
+            return Ok(response); // 200
         }
     }
 }

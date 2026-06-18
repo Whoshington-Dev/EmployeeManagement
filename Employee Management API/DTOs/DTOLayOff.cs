@@ -1,6 +1,6 @@
 ﻿namespace Employee_Management_API.DTOs
 {
-    public class DTOLayOff
+    public record DTOLayOff
     {
         public string Cpf { get; set; }
         public DateTime TerminationDate { get; set; }

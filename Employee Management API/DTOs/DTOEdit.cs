@@ -2,7 +2,7 @@
 
 namespace Employee_Management_API.DTOs
 {
-    public class DTOEdit
+    public record DTOEdit
     {
         public string Cpf { get; set; }
         public string Department { get; set; }

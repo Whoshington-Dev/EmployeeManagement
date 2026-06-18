@@ -1,6 +1,7 @@
 ﻿using EmployeeManagement.Domain.Entities;
 using EmployeeManagement.Infrastructure;
 using EmployeeManagement.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagement.Repositories
 {
@@ -13,30 +14,28 @@ namespace EmployeeManagement.Repositories
             _context = context;
         }
 
-        public void Add(Employee employee)
-        
+        public async Task AddAsync(Employee employee)
         {
             _context.Employees.Add(employee);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void Remove(Employee employee)
+        public async Task RemoveAsync(Employee employee)
         {
             _context.Employees.Remove(employee);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void Update(Employee employee)
+        public async Task UpdateAsync(Employee employee)
         {
             _context.Employees.Update(employee);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public Employee GetByCpf(string Cpf)
+        public async Task<Employee> GetByCpfAsync(string Cpf)
         {
-            return _context.Employees.FirstOrDefault(emp => emp.Cpf == Cpf);
-
+             return await _context.Employees.FirstOrDefaultAsync(emp => emp.Cpf == Cpf);
         }
-        public IList<Employee> GetAll()
+        public async Task<IList<Employee>> GetAllAsync()
         {
-            return _context.Employees.ToList();
+            return await _context.Employees.ToListAsync();
         }
 
     }

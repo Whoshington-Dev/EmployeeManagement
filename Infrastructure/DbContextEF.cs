@@ -15,19 +15,19 @@ namespace EmployeeManagement.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>()
-                .HasOne(e => e.Department)
-                .WithMany()
-                .HasForeignKey(e => e.DepartmentId);
+                .HasOne(e => e.Department) 
+                .WithMany() 
+                .HasForeignKey(e => e.DepartmentId); 
 
             modelBuilder.Entity<Employee>()
-                .HasOne(e => e.JobPosition)
+                .HasOne(e => e.JobPosition) 
                 .WithMany()
-                .HasForeignKey(e => e.JobPositionId);
+                .HasForeignKey(e => e.JobPositionId); 
 
             modelBuilder.Entity<JobPosition>()
-                .HasOne(jp => jp.Department)
-                .WithMany()
-                .HasForeignKey(jp => jp.DepartmentId);
+                .HasOne(jp => jp.Department) 
+                .WithMany() 
+                .HasForeignKey(jp => jp.DepartmentId); 
         }
 
     }

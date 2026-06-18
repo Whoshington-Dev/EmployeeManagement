@@ -3,11 +3,11 @@ using EmployeeManagement.Domain.Entities.Enums;
 using EmployeeManagement.Repository;
 using EmployeeManagement.Repositories;
 
-
 namespace EmployeeManagement.Services
 {
     public class EmployeeService
     {
+        // DI
         private readonly IEmployeeRepository _repository;
         private readonly IDepartmentRepository _department;
         private readonly IJobPositionRepository _jobPosition;
@@ -18,42 +18,42 @@ namespace EmployeeManagement.Services
             _department = department;
             _jobPosition = jobPosition;
         }
-        public void AddEmployee(string cpf, string name, Department department, JobPosition jobPosition, Seniority seniority, DateTime admissionDate)
+        public async Task AddEmployeeAsync(string cpf, string name, Department department, JobPosition jobPosition, Seniority seniority, DateTime admissionDate)
         {
-            var dep = _department.GetByName(department.DptName);
+            var dep = await _department.GetByNameAsync(department.DptName);
             if (dep == null)
             {
-                dep = _department.Add(department.DptName);
+                dep = await _department.AddAsync(department.DptName);
             }
-            var jp = _jobPosition.GetByName(jobPosition.JobPositionName, dep, seniority);
+            var jp = await _jobPosition.GetByNameAsync(jobPosition.JobPositionName, dep, seniority);
             if (jp == null)
             {
-                jp = _jobPosition.Add(jobPosition.JobPositionName, dep, seniority);
+                jp = await _jobPosition.AddAsync(jobPosition.JobPositionName, dep, seniority);
             }
 
             Employee employee = new Employee(cpf, name, dep, jp, seniority, admissionDate);
-            _repository.Add(employee);
+            await _repository.AddAsync(employee);
         }
-        public void EditEmployee(string cpf, Department department, JobPosition jobPosition, Seniority seniority)
+        public async Task EditEmployeeAsync(string cpf, Department department, JobPosition jobPosition, Seniority seniority)
         {
-            Employee employee = _repository.GetByCpf(cpf);
+            Employee employee = await _repository.GetByCpfAsync(cpf);
 
             employee.ChangeDepartment(department);
             employee.ChangeJobPosition(jobPosition);
             employee.ChangeSeniority(seniority);
 
-            _repository.Update(employee);
+            await _repository.UpdateAsync(employee);
 
         }
-        public void LayOffEmployee(string cpf, DateTime TerminationDate, string reason)
+        public async Task LayOffEmployeeAsync(string cpf, DateTime TerminationDate, string reason)
         {
-            Employee employee = _repository.GetByCpf(cpf);
+            Employee employee = await _repository.GetByCpfAsync(cpf);
             employee.LayOff(TerminationDate, reason);
-            _repository.Update(employee);
+            await _repository.UpdateAsync(employee);
         }
-        public IList<Employee> GetEmployees()
+        public async Task<IList<Employee>> GetEmployeesAsync()
         {
-            return _repository.GetAll();
+            return await _repository.GetAllAsync();
         }
 
 

@@ -11,6 +11,7 @@ namespace EmployeeManagement.Domain.Entities
         public string Cpf { get; private set; }
         public string Name { get; private set; }
         public DateTime DateOfAdmission { get; private set; }
+        [NotMapped]
         public Seniority Seniority { get; private set; }
         public EmployeeStatus EmployeeStatus { get; private set; }
         public Department Department { get; private set; }

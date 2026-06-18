@@ -2,7 +2,7 @@
 
 namespace Employee_Management_API.DTOs
 {
-    public class DTOResponse
+    public record DTOResponse
     {
         public string Cpf { get; set; }
         public string Name { get; set; } 

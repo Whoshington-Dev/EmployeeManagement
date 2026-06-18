@@ -1,5 +1,6 @@
 ﻿using EmployeeManagement.Domain.Entities;
 using EmployeeManagement.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagement.Repositories
 {
@@ -12,15 +13,15 @@ namespace EmployeeManagement.Repositories
             _context = context;
         }
 
-        public Department GetByName(string dptName)
+        public async Task<Department> GetByNameAsync(string dptName)
         {
-            return _context.Departments.FirstOrDefault(dep => dep.DptName == dptName);
+            return await _context.Departments.FirstOrDefaultAsync(dep => dep.DptName == dptName);
         }
-        public Department Add(string dptName)
+        public async Task<Department> AddAsync(string dptName)
         {
             var department = new Department(dptName );
-            _context.Departments.Add(department);
-            _context.SaveChanges();
+            await _context.Departments.AddAsync(department);
+            await _context.SaveChangesAsync();
             return department;
         }
 

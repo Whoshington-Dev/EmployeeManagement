@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Employee_Management_API.DTOs
 {
     // DTO of Creation Employee
-    public class DTOAddition
+    public record DTOAddition
     {
         [Required]
         public string Name { get; set; }

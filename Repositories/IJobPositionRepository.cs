@@ -5,7 +5,7 @@ namespace EmployeeManagement.Repositories
 {
     public interface IJobPositionRepository
     {
-        public JobPosition GetByName(string JobPositionName, Department department, Seniority seniority);
-        public JobPosition Add(string JobPositionName, Department department, Seniority seniority);
+        public Task<JobPosition> GetByNameAsync(string JobPositionName, Department department, Seniority seniority);
+        public Task<JobPosition> AddAsync(string JobPositionName, Department department, Seniority seniority);
     }
 }
