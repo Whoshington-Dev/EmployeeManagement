@@ -4,7 +4,7 @@ using EmployeeManagement.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace EmployeeManagement.Repositories
+namespace EmployeeManagement.Repository
 {
     public class JobPositionRepository : IJobPositionRepository
     {

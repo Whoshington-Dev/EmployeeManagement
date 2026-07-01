@@ -1,6 +1,6 @@
 ﻿using EmployeeManagement.Domain.Entities;
 
-namespace EmployeeManagement.Repositories
+namespace EmployeeManagement.Repository
 {
     public interface IDepartmentRepository
     {

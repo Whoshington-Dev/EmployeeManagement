@@ -1,7 +1,7 @@
 ﻿using EmployeeManagement.Domain.Entities;
 using EmployeeManagement.Domain.Entities.Enums;
 
-namespace EmployeeManagement.Repositories
+namespace EmployeeManagement.Repository
 {
     public interface IJobPositionRepository
     {

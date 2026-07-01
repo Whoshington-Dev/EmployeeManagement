@@ -34,8 +34,8 @@ namespace EmployeeManagement.Domain.Entities
             Cpf = cpf;
             Name = name;
             Department = department;
-            Seniority = seniority;
             JobPosition = jobPosition;
+            Seniority = seniority;
             DateOfAdmission = dateOfAdmission;
             // Admission status 
             EmployeeStatus = CompanyTenure(dateOfAdmission);

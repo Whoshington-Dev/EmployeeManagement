@@ -1,4 +1,5 @@
 <Solution>
-  <Project Path="./Employee Management API/Employee Management API.csproj" />
+  <Project Path="EmployeeManagement.Tests/EmployeeManagement.Tests.csproj" Id="6adba0ce-e63b-4dcd-9b3d-d1663e793ede" />
+  <Project Path="Employee Management API/Employee Management API.csproj" />
   <Project Path="EmployeeManagement.csproj" />
 </Solution>

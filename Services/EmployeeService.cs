@@ -1,7 +1,6 @@
 ﻿using EmployeeManagement.Domain.Entities;
 using EmployeeManagement.Domain.Entities.Enums;
 using EmployeeManagement.Repository;
-using EmployeeManagement.Repositories;
 
 namespace EmployeeManagement.Services
 {
