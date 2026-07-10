@@ -1,32 +1,33 @@
-using Xunit;
-using Moq;
-using EmployeeManagement.Repository;
 using EmployeeManagement.Domain.Entities;
 using EmployeeManagement.Domain.Entities.Enums;
+using EmployeeManagement.Repository;
 using EmployeeManagement.Services;
+using Moq;
+using System.Xml.Linq;
+using Xunit;
 
 namespace EmployeeManagement.Tests.Services
 {
     public class EmployeeServiceTests
     {
-
+        // DI 
         private readonly Mock<IEmployeeRepository> _employeeRepositoryMock;
-        private readonly Mock<IDepartmentRepository> _DepartmentRepositoryMock;
-        private readonly Mock<IJobPositionRepository> _JobRepositoryMock;
+        private readonly Mock<IDepartmentRepository> _departmentRepositoryMock;
+        private readonly Mock<IJobPositionRepository> _jobRepositoryMock;
 
         private readonly EmployeeService _employeeService;
 
         public EmployeeServiceTests()
         {
-            
+            // Injection 
             _employeeRepositoryMock = new Mock<IEmployeeRepository>();
-            _DepartmentRepositoryMock = new Mock<IDepartmentRepository>();
-            _JobRepositoryMock = new Mock<IJobPositionRepository>();
+            _departmentRepositoryMock = new Mock<IDepartmentRepository>();
+            _jobRepositoryMock = new Mock<IJobPositionRepository>();
 
             _employeeService = new EmployeeService(
                 _employeeRepositoryMock.Object, 
-                _DepartmentRepositoryMock.Object,
-                _JobRepositoryMock.Object
+                _departmentRepositoryMock.Object,
+                _jobRepositoryMock.Object
             );
         }
 
@@ -44,5 +45,26 @@ namespace EmployeeManagement.Tests.Services
                 DateTime.Parse("2023-01-01")
             );
         }
+        [Fact]
+        public async Task AddEmployeeAsync_WhenDepartmentAndJobPositionExist_AddsEmployeeWithoutCreatingThem()
+        {
+            // Arrange
+            string cpf = "07511107109";
+            string name = "Whoshington Luis";
+            var department = new Department("IT");
+            var jobPosition = new JobPosition("Developer", department, Seniority.Junior);
+            var seniority = Seniority.Junior;
+            var dtOfAdm = DateTime.Parse("2023-01-01");
+            // Stub
+            _departmentRepositoryMock
+                .Setup(repo => repo.GetByNameAsync(department.DptName))
+                .ReturnsAsync(department);
+            _jobRepositoryMock
+                .Setup(repo => repo.GetByNameAsync(jobPosition.JobPositionName, department, seniority))
+                .ReturnsAsync(jobPosition);
+
+            //Act 
+            await _employeeService.AddEmployeeAsync(cpf, name, department, jobPosition, seniority, dtOfAdm);
+        }        
     }
 }
