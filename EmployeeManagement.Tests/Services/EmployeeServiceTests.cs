@@ -57,14 +57,20 @@ namespace EmployeeManagement.Tests.Services
             var dtOfAdm = DateTime.Parse("2023-01-01");
             // Stub
             _departmentRepositoryMock
-                .Setup(repo => repo.GetByNameAsync(department.DptName))
+                .Setup(derp => derp.GetByNameAsync(department.DptName))
                 .ReturnsAsync(department);
             _jobRepositoryMock
-                .Setup(repo => repo.GetByNameAsync(jobPosition.JobPositionName, department, seniority))
+                .Setup(jps => jps.GetByNameAsync(jobPosition.JobPositionName, department, seniority))
                 .ReturnsAsync(jobPosition);
 
             //Act 
             await _employeeService.AddEmployeeAsync(cpf, name, department, jobPosition, seniority, dtOfAdm);
-        }        
+
+            // Assert
+            _employeeRepositoryMock.Verify(repo => repo.AddAsync(It.Is<Employee>(e => e.Cpf == cpf && e.Name == name && e.Department == department && e.JobPosition == jobPosition && e.Seniority == seniority)), Times.Once);
+            _departmentRepositoryMock.Verify(dep => dep.GetByNameAsync("IT"), Times.Once);
+            _jobRepositoryMock.Verify(jp => jp.GetByNameAsync(jobPosition.JobPositionName, department, seniority), Times.Once);
+        }
+        public async Task EditEmployeeAsync_WhenEmployeeAlredyExist_EditEmployeesWithoutChangingThem() { }
     }
 }
