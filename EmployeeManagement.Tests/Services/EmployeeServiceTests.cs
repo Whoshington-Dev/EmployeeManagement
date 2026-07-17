@@ -3,7 +3,6 @@ using EmployeeManagement.Domain.Entities.Enums;
 using EmployeeManagement.Repository;
 using EmployeeManagement.Services;
 using Moq;
-using System.Xml.Linq;
 using Xunit;
 
 namespace EmployeeManagement.Tests.Services
@@ -49,7 +48,7 @@ namespace EmployeeManagement.Tests.Services
         public async Task AddEmployeeAsync_WhenDepartmentAndJobPositionExist_AddsEmployeeWithoutCreatingThem()
         {
             // Arrange
-            string cpf = "07511107109";
+            string cpf = "12345678900";
             string name = "Whoshington Luis";
             var department = new Department("IT");
             var jobPosition = new JobPosition("Developer", department, Seniority.Junior);
@@ -57,7 +56,7 @@ namespace EmployeeManagement.Tests.Services
             var dtOfAdm = DateTime.Parse("2023-01-01");
             // Stub
             _departmentRepositoryMock
-                .Setup(derp => derp.GetByNameAsync(department.DptName))
+                .Setup(dep => dep.GetByNameAsync(department.DptName))
                 .ReturnsAsync(department);
             _jobRepositoryMock
                 .Setup(jps => jps.GetByNameAsync(jobPosition.JobPositionName, department, seniority))
@@ -71,6 +70,39 @@ namespace EmployeeManagement.Tests.Services
             _departmentRepositoryMock.Verify(dep => dep.GetByNameAsync("IT"), Times.Once);
             _jobRepositoryMock.Verify(jp => jp.GetByNameAsync(jobPosition.JobPositionName, department, seniority), Times.Once);
         }
-        public async Task EditEmployeeAsync_WhenEmployeeAlredyExist_EditEmployeesWithoutChangingThem() { }
+        [Fact]
+        public async Task EditEmployeeAsync_WhenDepartmentJobPositionAndSeniorityExist_UpdatesDepartment() 
+        {
+            // Arrange
+            var department = new Department("CIO");
+            _departmentRepositoryMock.Setup(dep => dep.GetByNameAsync("CIO"))
+                .ReturnsAsync(department);
+
+            // Act 
+            await _departmentRepositoryMock.Object.AddDepartmentAsync("CIO");
+
+            // Assert 
+            _departmentRepositoryMock.Verify(dpt => dpt.AddDepartmentAsync("CIO"), Times.Once);
+
+        }
+        [Fact]
+        public async Task EditEmployeeAsync_WhenDepartmentJobPositionAndSeniorityExist_UpdatesJobPosition() 
+        {
+            // Arrenge 
+
+            // Act 
+
+            // Assert
+        }
+
+        [Fact]
+        public async Task EditEmployeeAsync_WhenDepartmentJobPositionAndSeniorityExist_UpdatesSeniority() 
+        {
+            // Arrenge 
+
+            // Act 
+
+            // Assert
+        }
     }
 }
