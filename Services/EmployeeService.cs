@@ -22,12 +22,12 @@ namespace EmployeeManagement.Services
             var dep = await _department.GetByNameAsync(department.DptName);
             if (dep == null)
             {
-                dep = await _department.AddAsync(department.DptName);
+                dep = await _department.AddDepartmentAsync(department.DptName);
             }
             var jp = await _jobPosition.GetByNameAsync(jobPosition.JobPositionName, dep, seniority);
             if (jp == null)
             {
-                jp = await _jobPosition.AddAsync(jobPosition.JobPositionName, dep, seniority);
+                jp = await _jobPosition.AddJobPositionAsync(jobPosition.JobPositionName, dep, seniority);
             }
 
             Employee employee = new Employee(cpf, name, dep, jp, seniority, admissionDate);

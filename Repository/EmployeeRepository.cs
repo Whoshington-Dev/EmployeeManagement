@@ -19,14 +19,14 @@ namespace EmployeeManagement.Repositories
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
         }
-        public async Task RemoveAsync(Employee employee)
-        {
-            _context.Employees.Remove(employee);
-            await _context.SaveChangesAsync();
-        }
         public async Task UpdateAsync(Employee employee)
         {
             _context.Employees.Update(employee);
+            await _context.SaveChangesAsync();
+        }
+        public async Task RemoveAsync(Employee employee)
+        {
+            _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
         }
         public async Task<Employee> GetByCpfAsync(string Cpf)

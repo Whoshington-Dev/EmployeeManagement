@@ -14,7 +14,7 @@ namespace Employee_Management_API.Controllers
 
         public EmployeeController(EmployeeService service)
         {
-            _service = service; // constructor to allow instantiation of new objects
+            _service = service; 
         }
 
         [HttpPost] // Verb for addition
@@ -29,7 +29,7 @@ namespace Employee_Management_API.Controllers
         public async Task<IActionResult> EditEmployee([FromBody] DTOEdit dtoEdit)
         {
             await _service.EditEmployeeAsync(dtoEdit.Cpf, new Department(dtoEdit.Department),
-                new JobPosition(dtoEdit.JobPositionName, new Department(dtoEdit.Department), dtoEdit.Seniority), dtoEdit.Seniority);
+             new JobPosition(dtoEdit.JobPositionName, new Department(dtoEdit.Department), dtoEdit.Seniority), dtoEdit.Seniority);
             return NoContent(); // 204
         }
         [HttpPatch]

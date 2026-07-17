@@ -18,7 +18,7 @@ namespace EmployeeManagement.Repositories
         {
             return await _context.Departments.FirstOrDefaultAsync(dep => dep.DptName == dptName);
         }
-        public async Task<Department> AddAsync(string dptName)
+        public async Task<Department> AddDepartmentAsync(string dptName)
         {
             var department = new Department(dptName );
             await _context.Departments.AddAsync(department);

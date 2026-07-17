@@ -20,7 +20,7 @@ namespace EmployeeManagement.Repository
         {
             return await _context.JobPositions.FirstOrDefaultAsync(jp => jp.JobPositionName == JobPositionName && jp.Department == department && jp.Seniority == seniority);
         }
-        public async Task<JobPosition> AddAsync(string JobPositionName, Department department, Seniority seniority)
+        public async Task<JobPosition> AddJobPositionAsync(string JobPositionName, Department department, Seniority seniority)
         {
             var jobPosition = new JobPosition(JobPositionName, department, seniority);
             await _context.JobPositions.AddAsync(jobPosition);
