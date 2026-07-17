@@ -71,38 +71,27 @@ namespace EmployeeManagement.Tests.Services
             _jobRepositoryMock.Verify(jp => jp.GetByNameAsync(jobPosition.JobPositionName, department, seniority), Times.Once);
         }
         [Fact]
-        public async Task EditEmployeeAsync_WhenDepartmentJobPositionAndSeniorityExist_UpdatesDepartment() 
+        public async Task EditEmployeeAsync_WhenCalled_UpdatesDepartmentJobPositionAndSeniority()
         {
             // Arrange
-            var department = new Department("CIO");
-            _departmentRepositoryMock.Setup(dep => dep.GetByNameAsync("CIO"))
-                .ReturnsAsync(department);
+            var employee = CreateValidEmployee();
+
+            var newDepartment = new Department("Cyber Security");
+            var newJobPosition = new JobPosition("Cybersecurity Analyst", newDepartment, Seniority.Pleno);
+            var newSeniority = Seniority.Pleno;
+
+
+            _employeeRepositoryMock.Setup(repo => repo.GetByCpfAsync("12345678900"))
+                .ReturnsAsync(employee);
 
             // Act 
-            await _departmentRepositoryMock.Object.AddDepartmentAsync("CIO");
+            await _employeeService.EditEmployeeAsync("12345678900", newDepartment, newJobPosition, newSeniority);
 
             // Assert 
-            _departmentRepositoryMock.Verify(dpt => dpt.AddDepartmentAsync("CIO"), Times.Once);
+            Assert.Equal(newDepartment, employee.Department);
+            Assert.Equal(newJobPosition, employee.JobPosition);
+            Assert.Equal(newSeniority, employee.Seniority);
 
-        }
-        [Fact]
-        public async Task EditEmployeeAsync_WhenDepartmentJobPositionAndSeniorityExist_UpdatesJobPosition() 
-        {
-            // Arrenge 
-
-            // Act 
-
-            // Assert
-        }
-
-        [Fact]
-        public async Task EditEmployeeAsync_WhenDepartmentJobPositionAndSeniorityExist_UpdatesSeniority() 
-        {
-            // Arrenge 
-
-            // Act 
-
-            // Assert
         }
     }
 }
