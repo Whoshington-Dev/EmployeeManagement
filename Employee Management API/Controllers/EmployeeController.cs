@@ -20,16 +20,15 @@ namespace Employee_Management_API.Controllers
         [HttpPost] // Verb for addition
         public async Task<IActionResult> AddEmployee([FromBody] DTOAddition dtoAdd)
         {
-            await _service.AddEmployeeAsync(dtoAdd.Cpf, dtoAdd.Name, new Department(dtoAdd.Department),
-                new JobPosition(dtoAdd.JobPositionName, new Department(dtoAdd.Department), dtoAdd.Seniority), dtoAdd.Seniority, dtoAdd.DateOfAdmission
-                );
+
+            await _service.AddEmployeeAsync(dtoAdd.Cpf, dtoAdd.Name, new Department(dtoAdd.Department), new JobPosition(dtoAdd.JobPositionName, dtoAdd.Seniority), dtoAdd.Seniority, dtoAdd.DateOfAdmission, dtoAdd.Today);
+
             return Created(); // 201 
         }
         [HttpPut]
         public async Task<IActionResult> EditEmployee([FromBody] DTOEdit dtoEdit)
         {
-            await _service.EditEmployeeAsync(dtoEdit.Cpf, new Department(dtoEdit.Department),
-             new JobPosition(dtoEdit.JobPositionName, new Department(dtoEdit.Department), dtoEdit.Seniority), dtoEdit.Seniority);
+            await _service.EditEmployeeAsync(dtoEdit.Name, new Department(dtoEdit.Department), new JobPosition(dtoEdit.JobPositionName, dtoEdit.Seniority), dtoEdit.Seniority);
             return NoContent(); // 204
         }
         [HttpPatch]

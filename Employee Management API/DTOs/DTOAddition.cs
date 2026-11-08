@@ -13,5 +13,6 @@ namespace Employee_Management_API.DTOs
         public string JobPositionName { get; set; }
         public Seniority Seniority { get; set; }
         public DateTime DateOfAdmission { get; set; }
+        public DateTime Today { get; set; }
     }
 }

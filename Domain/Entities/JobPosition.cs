@@ -8,21 +8,18 @@ namespace EmployeeManagement.Domain.Entities
     {
         public int Id { get; set; }
         [Column("jobTitle")]
-        public string JobPositionName { get; set; }
-        public Department Department { get; set; }
-        public int DepartmentId { get; set; }
+        public string JobPositionName { get; private set; }
         public Seniority Seniority { get; set; }
 
         public JobPosition() { }
 
-        public JobPosition(string jobPosition, Department department, Seniority seniority)
+        public JobPosition(string jobPosition, Seniority seniority)
         {
             if (string.IsNullOrWhiteSpace(jobPosition))
             {
                 throw new ArgumentNullException($"Invalid name entered! Please try again. {nameof(jobPosition)}");
             }
             JobPositionName = jobPosition;
-            Department = department;
             Seniority = seniority;
         }
 
