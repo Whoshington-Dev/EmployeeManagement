@@ -4,7 +4,7 @@ namespace Employee_Management_API.DTOs
 {
     public record DTOEdit
     {
-        public string Cpf { get; set; }
+        public string Name { get; set; }
         public string Department { get; set; }
         public string JobPositionName { get; set; }
         public Seniority Seniority { get; set; }
